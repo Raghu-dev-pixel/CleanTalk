@@ -1,81 +1,88 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<meta charset="utf-8">
+<html lang="en">
 <head>
-<title>Papo Reto</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="author" content="C. Magno Nascimento">
-<script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='./css/style.css') }}">
-<link rel="icon" type="image/png" href="{{ url_for('static', filename='./images/icon.png') }}">
+    <meta charset="UTF-8">
+    <title>Google Clean Talk</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='./images/Google.png') }}">
 </head>
 <body>
-	<a href="https://magnodev.netlify.com/"><img class="imghome" src="{{ url_for('static', filename='./images/home.png') }}"/></a>
-<script type="text/javascript" charset="utf-8">
-const socket = io();
 
-socket.on('connect', () => {
-	socket.emit('connected', {'nickname':document.getElementById('nickname-input').value}, (data) => {
-	});
-});
+    <h1>Google Clean Talk</h1>
 
-socket.on('server_message', (data) => {
-	let e = document.createElement('p');
-	let sp = document.createElement('span');
-	sp.innerHTML = data.nickname;
-	e.appendChild(sp);
-	e.innerHTML = e.innerHTML+'>> '+data.message;
+    <!-- Display incoming messages and images -->
+    <div id="message-box" style="border:1px solid #000; height:300px; overflow-y:scroll;"></div>
 
-	if(document.getElementById('message-box').children.length>20){
-		document.getElementById('message-box').removeChild(document.getElementById('message-box').children[0]);
-	}
+    <!-- Text input for chat -->
+    <input type="text" id="message-input" placeholder="Type your message">
+    <button onclick="sendMessage()">Send Message</button>
 
-	document.getElementById('message-box').appendChild(e);
+    <!-- Image input -->
+    <input type="file" id="image-input" accept="image/*">
+    <button onclick="sendImage()">Send Image</button>
 
+    <script>
+        const socket = io();
 
-	document.getElementById('message-box').scroll(0, document.getElementById('message-box').scrollHeight);
-});
+        // Listen for server messages
+        socket.on('server_message', (data) => {
+            const messageBox = document.getElementById('message-box');
+            let newElement = document.createElement('div');
 
-function htmlEntities(str) {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
+            if (data.image) {
+                // If it's an image, display it
+                let img = document.createElement('img');
+                img.src = data.image;
+                img.style.maxWidth = '200px';
+                newElement.appendChild(img);
+            } else {
+                if (data.status == "Inapp") {
+                    newElement.textContent = data.nickname + ': ' + 'message might be violent';
+                    newElement.style.color = "red";
+                }
+                else{
 
-function sendMessage(){
-	socket.emit('client_message', {'nickname': htmlEntities(document.getElementById('nickname-input').value), 'message':  htmlEntities(document.getElementById('message-input').value)});
-	document.getElementById('message-input').value = '';
-}
+                    // If it's a text message, display it
+                    newElement.textContent = data.nickname + ': ' + data.message;
+                }
+            }
 
-function isPressingEnter(e){
-	let k;
-	if(window.event){
-		k = e.keyCode;
-		if(k===13){
-			sendMessage();
-		}
-	}else if(e.which){
-		k = e.which;
-		if(k===13){
-			sendMessage();
-		}
-	}
-}
+            messageBox.appendChild(newElement);
+            messageBox.scrollTop = messageBox.scrollHeight;  // Auto-scroll to the bottom
+        });
 
-</script>
-<h1 id="title">Papo Reto</h1>
-<section id="chat-box">
-	<section id="message-box">
-	</section>
+        // Send a text message
+        function sendMessage() {
+            const message = document.getElementById('message-input').value;
+            const nickname = document.getElementById('nickname-input').value; // Capture username
+            socket.emit('client_message', {nickname: nickname, message: message});
+            document.getElementById('message-input').value = '';  // Clear input
+        }
 
-	<section id="input-box">
-		<input type="text" autofocus onkeypress="return isPressingEnter(event)" required placeholder="Digite sua mensagem aqui" id="message-input">
-		<button type="button" id="send-button" onclick="sendMessage()" >>></button>
-	</section>
-</section>
+        // Send an image
+        function sendImage() {
+            const fileInput = document.getElementById('image-input');
+            const file = fileInput.files[0];
+            const nickname = document.getElementById('nickname-input').value; // Capture username
 
-<section id="nickname-box">
-	<label id="nickname-label" for="nickname-input">Nickname: </label>
-	<input type="text" id="nickname-input" autocomplete="off" value="Guest">
-</section>
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const imageData = event.target.result;  // Base64 image data
+                    socket.emit('client_image', {nickname: nickname, image: imageData});
+                };
+                reader.readAsDataURL(file);  // Convert image to base64
+            } else {
+                alert('Please select an image file.');
+            }
+        }
+    </script>
+
+    <!-- Nickname input -->
+    <section id="nickname-box">
+        <label id="nickname-label" for="nickname-input">User: </label>
+        <input type="text" id="nickname-input" autocomplete="off" value="User">
+    </section>
 
 </body>
 </html>
