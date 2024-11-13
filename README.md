@@ -19,8 +19,8 @@ The CleanTalk application can be used by following three simple steps:
 
 1) **Clone the Repository**
 ```bash
-$ git clone https://github.com/Raghu-dev-pixel/Google_clean_talk.git
-$ cd Google_clean_talk
+$ git clone https://github.com/Raghu-dev-pixel/CleanTalk.git
+$ cd CleanTalk
 $ pip install -r requirements.txt
 ```
 
