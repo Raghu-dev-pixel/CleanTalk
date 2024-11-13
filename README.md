@@ -72,5 +72,7 @@ CleanTalk offers several advantages and distinct differences compared to existin
 2) **Focused on Harassment-Free Communication**: While existing applications and methodologies analyze text for toxicity, it does not specialize in filtering for specific scenarios like harassment in professional, educational, and customer service settings. CleanTalk, on the other hand, is designed specifically to prevent harassment in contexts where users—especially women—are often targeted, such as customer-facing roles or professional communications.
 
 3) **Multimedia Support**: If CleanTalk image moderation could be incorporated along with text, it provides an extra layer of protection by filtering explicit images and other media. Perspective API primarily focuses on text analysis, so this added capability makes CleanTalk more comprehensive.
-    
+
+## Additional Information
+The use of Google's Gemini API in the code requires the user to set and activate the API key explicitly. In my project, I have created the API key explicitly for this project and the demo, however, it can be replaced in the future to be able to accept the corresponding API key of the user.
 
