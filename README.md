@@ -14,16 +14,31 @@ The basic software architecture of the application can be explained as follows:
 2) **Backend**: At the backend, we have the Flask and Socket.IO server. The Flask application hosts the webpage and serves static files using Flask's routing and template capabilities. On the other hand, the Socket.IO server manages the exchange of text messages and images between the sender and receiver. We have two functions namely client_message and client_image to listen to events (that is text messages and images).
 3) **Google's Gemini AI model**: Google's Gemini model is the heart of the application. The Gemini AI model is used to classify text messages to identify whether they contain harassment or inappropriate content. When a sender sends a message, the backend code calls the pre-trained **gemini-1.5-flash-8b** model to classify the message as either "harassment" or "non-harassment". If the model detects harassment, the message is flagged, and only the sender sees it with a red warning message. For now, the application is built considering only text as input, but later it could also be extended for other inputs such as images and video. 
 
-## Installing
+## Getting Started
+The Google Clean Talk application can be used by following three simple steps as described below:
 
-### Cloning
+1) **Cloning**
 ```bash
 $ git clone https://github.com/Raghu-dev-pixel/Google_clean_talk.git
 $ cd Google_clean_talk
 $ pip install -r requirements.txt
 ```
 
-### Running
+2) **Running**
 ```bash
 $ python main.py
 ```
+
+3) **Execution**
+* If the execution of the script is successful, the Flask application will start in development mode and it is now possible to open the chat application through the web browser by clicking on the address "http://127.0.0.1:5000" as shown below.
+
+* Two chat applications as shown below can be opened. To resemble male and female users respectively.
+
+
+* Appropriate Conversations: We can now exchange text messages like any other chat application. And as long as the conversations are appropriate the messages exchanged will be delivered to both the sender and receiver.
+
+* Inappropriate Conversations: If the messages are inappropriate or harassing in nature, the message will be flagged and will not be delivered to the reader and the sender will receive a warning message as shown below.
+
+  
+    
+
