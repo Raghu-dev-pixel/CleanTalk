@@ -57,28 +57,8 @@ def handle_message(data):
 @socketio.on('client_image')
 def handle_image(data):
     emit('server_message', data, broadcast=True)
-    #image_data = data['image']
-    #new_str = image_data.replace('data:image/jpeg;base64,', '')
-    #image = base64.b64decode(str(new_str))
 
-    #img = Image.open(io.BytesIO(image))
-
-    #fileName = 'test.jpeg'
-    #imagePath = ('D:\\base64toImageNewPath\\'+fileName)
-
-    #img.save(imagePath, 'jpeg')
-    
-    #prompt = f"""The image contains the following text: {img}"""
-
-    # Create the model instance
-    #model = genai.GenerativeModel("gemini-1.5-flash-8b")
-
-    # Generate content from the model
-    #response = model.generate_content(contents=prompt)
-    #print(response)
-
-    # Call the function to analyze the generated response
-    #analyse_data(response)
-
+#TODO, Use Google's vision API to detect violating images and flag accordingly.
+ 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
