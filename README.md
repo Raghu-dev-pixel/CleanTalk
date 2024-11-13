@@ -30,15 +30,17 @@ $ python main.py
 ```
 
 3) **Execution**
-* If the execution of the script is successful, the Flask application will start in development mode and it is now possible to open the chat application through the web browser by clicking on the address "http://127.0.0.1:5000" as shown below.
+* If the execution of the script is successful, the Flask application will start in development mode and it is now possible to open the chat application through the web browser by clicking on the address "http://127.0.0.1:5000" as shown below. ![App Execution](./static/images/Execution.png)
 
 * Two chat applications as shown below can be opened. To resemble male and female users respectively.
+  ![Chat Interface](./static/images/chat_interface.png)
 
 
 * Appropriate Conversations: We can now exchange text messages like any other chat application. And as long as the conversations are appropriate the messages exchanged will be delivered to both the sender and receiver.
+![Appropriate Context](./static/images/appropriate.png)
 
 * Inappropriate Conversations: If the messages are inappropriate or harassing in nature, the message will be flagged and will not be delivered to the reader and the sender will receive a warning message as shown below.
 
-  
+![Inappropriate Context](./static/images/inappropriate.png)
     
 
